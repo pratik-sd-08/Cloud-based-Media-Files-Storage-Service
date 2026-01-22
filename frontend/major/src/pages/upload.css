@@ -1,88 +1,91 @@
 
 .upload-container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  animation: fadeIn 0.7s ease;
+  padding: 30px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff, #f4f6f8);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.15);
+  animation: popIn 0.6s ease;
 }
 
-
-.upload-card {
-  width: 360px;
-  background: #ffffff;
-  padding: 32px;
-  border-radius: 18px;
-  text-align: center;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  animation: slideUp 0.8s ease;
-}
-
-
-.upload-card h2 {
-  margin-bottom: 22px;
+.upload-title {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 600;
+  margin-bottom: 20px;
   color: #203a43;
+  animation: slideDown 0.5s ease;
 }
 
-
-.upload-card input[type="file"] {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 18px;
-  border-radius: 12px;
-  border: 2px dashed #cfd8dc;
+.file-box {
+  display: block;
+  padding: 14px;
+  border-radius: 10px;
+  border: 2px dashed #2c5364;
+  color: #2c5364;
+  font-size: 14px;
   cursor: pointer;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  text-align: center;
+  margin-bottom: 20px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.upload-card input[type="file"]:hover {
-  border-color: #203a43;
-  background: #f6f9fa;
+.file-box:hover {
+  background: rgba(44, 83, 100, 0.08);
+  transform: scale(1.02);
 }
 
 
-.upload-card button {
+.upload-btn {
   width: 100%;
   padding: 12px;
-  background: #203a43;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2c5364, #203a43);
   color: #ffffff;
   font-size: 15px;
-  font-weight: 600;
-  border: none;
-  border-radius: 12px;
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.upload-card button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(32, 58, 67, 0.45);
+.upload-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
 }
 
-.upload-card button:active {
-  transform: scale(0.97);
+.upload-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 
-.upload-card p {
-  margin-top: 16px;
+.upload-msg {
+  margin-top: 18px;
   font-size: 14px;
-  color: #2e7d32;
+  color: #203a43;
+  text-align: center;
   animation: fadeIn 0.4s ease;
 }
 
 
-@keyframes slideUp {
+@keyframes popIn {
   from {
-    transform: translateY(40px) scale(0.95);
     opacity: 0;
+    transform: scale(0.95);
   }
   to {
-    transform: translateY(0) scale(1);
     opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

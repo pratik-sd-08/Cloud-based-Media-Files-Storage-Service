@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api/api";
 
 export default function Upload() {
   const [file, setFile] = useState(null);
@@ -15,16 +15,9 @@ export default function Upload() {
     formData.append("file", file);
 
     try {
-      const res = await axios.post(
-        "http://localhost:3200/upload",
-        formData
-      );
-
+      const res = await api.post("/upload", formData);
       setMsg(res.data.message);
     } catch (err) {
-      console.error("UPLOAD ERROR ↓↓↓");
-      console.error(err.response || err);
-
       setMsg(
         err.response?.data?.message ||
         err.message ||

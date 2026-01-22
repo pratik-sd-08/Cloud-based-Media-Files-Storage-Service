@@ -5,6 +5,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
+
 router.post("/signup", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -20,15 +21,12 @@ router.post("/signup", async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.create({
-      email,
-      password: hashedPassword,
-    });
+    await User.create({ email, password: hashedPassword });
 
     return res.status(201).json({
       message: "Signup successful. Please login.",
     });
-  } catch (err) {
+  } catch {
     return res.status(500).json({ message: "Signup failed" });
   }
 });
@@ -61,9 +59,9 @@ router.post("/login", async (req, res) => {
     return res.json({
       message: "Login successful",
       token,
-      expiresIn: 3600, 
+      expiresIn: 3600,
     });
-  } catch (err) {
+  } catch {
     return res.status(500).json({ message: "Login failed" });
   }
 });

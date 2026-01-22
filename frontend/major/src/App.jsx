@@ -1,13 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Auth from "./pages/Auth";
-import Upload from "./pages/Upload";
+import Dashboard from "./pages/Dashboard";
 
-function App() {
-  const [loggedIn, setLoggedIn] = useState(
-    !!localStorage.getItem("token")
+export default function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const expiry = localStorage.getItem("tokenExpiry");
+
+    if (!token || !expiry || Date.now() > expiry) {
+      
+      localStorage.removeItem("token");
+      localStorage.removeItem("tokenExpiry");
+      setAuthenticated(false);
+    } else {
+      setAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("tokenExpiry");
+    setAuthenticated(false);
+  };
+
+  return authenticated ? (
+    <Dashboard onLogout={handleLogout} />
+  ) : (
+    <Auth onAuth={() => setAuthenticated(true)} />
   );
-
-  return loggedIn ? <Upload /> : <Auth onAuth={() => setLoggedIn(true)} />;
 }
-
-export default App;
