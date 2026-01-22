@@ -1,4 +1,4 @@
-/* page background */
+
 .auth-container {
   min-height: 100vh;
   display: flex;
@@ -8,7 +8,7 @@
   animation: fadeIn 0.8s ease;
 }
 
-/* card */
+
 .auth-card {
   width: 360px;
   background: #ffffff;
@@ -19,7 +19,7 @@
   animation: slideUp 0.9s ease;
 }
 
-/* title */
+
 .auth-card h2 {
   margin-bottom: 22px;
   font-size: 24px;
@@ -27,7 +27,7 @@
   color: #203a43;
 }
 
-/* inputs */
+
 .auth-card input {
   width: 100%;
   padding: 12px;
@@ -44,7 +44,7 @@
   box-shadow: 0 0 0 3px rgba(32, 58, 67, 0.15);
 }
 
-/* main button */
+
 .auth-card button {
   width: 100%;
   padding: 12px;
@@ -68,7 +68,7 @@
   transform: scale(0.97);
 }
 
-/* toggle text */
+
 .auth-card p {
   margin-top: 18px;
   font-size: 14px;
@@ -81,7 +81,7 @@
   opacity: 0.7;
 }
 
-/* animations */
+
 @keyframes slideUp {
   from {
     transform: translateY(50px) scale(0.95);

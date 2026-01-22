@@ -1,4 +1,4 @@
-/* full screen background */
+
 .upload-container {
   min-height: 100vh;
   display: flex;
@@ -8,7 +8,7 @@
   animation: fadeIn 0.7s ease;
 }
 
-/* card */
+
 .upload-card {
   width: 360px;
   background: #ffffff;
@@ -19,7 +19,7 @@
   animation: slideUp 0.8s ease;
 }
 
-/* title */
+
 .upload-card h2 {
   margin-bottom: 22px;
   font-size: 22px;
@@ -27,7 +27,7 @@
   color: #203a43;
 }
 
-/* file input */
+
 .upload-card input[type="file"] {
   width: 100%;
   padding: 12px;
@@ -35,7 +35,7 @@
   border-radius: 12px;
   border: 2px dashed #cfd8dc;
   cursor: pointer;
-  transition: border-color 0.3s ease, background 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .upload-card input[type="file"]:hover {
@@ -43,7 +43,7 @@
   background: #f6f9fa;
 }
 
-/* button */
+
 .upload-card button {
   width: 100%;
   padding: 12px;
@@ -66,7 +66,7 @@
   transform: scale(0.97);
 }
 
-/* message */
+
 .upload-card p {
   margin-top: 16px;
   font-size: 14px;
@@ -74,7 +74,7 @@
   animation: fadeIn 0.4s ease;
 }
 
-/* animations */
+
 @keyframes slideUp {
   from {
     transform: translateY(40px) scale(0.95);
