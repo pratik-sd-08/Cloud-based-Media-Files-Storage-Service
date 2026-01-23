@@ -1,0 +1,63 @@
+.files-container {
+  padding: 20px;
+}
+
+.files-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.file-card {
+  background: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.file-name {
+  font-weight: 600;
+  color: #444;
+}
+
+.file-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.file-actions a,
+.file-actions button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: none;
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.file-actions a {
+  background: #4e73df;
+  color: white;
+}
+
+.file-actions button {
+  background: #1cc88a;
+  color: white;
+}
+
+.file-actions a:hover {
+  background: #2e59d9;
+}
+
+.file-actions button:hover {
+  background: #17a673;
+}

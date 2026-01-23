@@ -1,94 +1,75 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #4e73df, #1cc88a);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .auth-container {
-  height: 100vh;
   width: 100%;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   display: flex;
-  align-items: center;
   justify-content: center;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  align-items: center;
 }
-
 
 .auth-card {
-  width: 360px;
-  padding: 32px;
   background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-  animation: slideUp 0.6s ease-out;
+  padding: 40px 35px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  width: 350px;
+  text-align: center;
 }
 
-
 .auth-card h2 {
-  text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 25px;
   color: #333;
-  font-weight: 600;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
 }
 
 .auth-card input {
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 16px;
-  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 14px;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  transition: border 0.3s ease;
 }
 
 .auth-card input:focus {
+  border-color: #4e73df;
   outline: none;
-  border-color: #2c5364;
-  box-shadow: 0 0 0 3px rgba(44, 83, 100, 0.15);
 }
 
-
 .auth-card button {
-  width: 100%;
   padding: 12px;
   border: none;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #2c5364, #203a43);
-  color: #fff;
+  border-radius: 6px;
+  background: #4e73df;
+  color: white;
   font-size: 15px;
-  font-weight: 500;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: background 0.3s ease;
 }
 
 .auth-card button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  background: #2e59d9;
 }
-
-.auth-card button:active {
-  transform: translateY(0);
-  box-shadow: none;
-}
-
 
 .auth-card p {
-  margin-top: 18px;
-  text-align: center;
-  font-size: 13px;
-  color: #2c5364;
+  margin-top: 15px;
+  color: #4e73df;
   cursor: pointer;
-  user-select: none;
+  font-size: 14px;
 }
 
 .auth-card p:hover {
   text-decoration: underline;
-}
-
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

@@ -1,33 +1,39 @@
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import api from "./api/api";
+
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const expiry = localStorage.getItem("tokenExpiry");
-
-    if (!token || !expiry || Date.now() > expiry) {
-      
-      localStorage.removeItem("token");
-      localStorage.removeItem("tokenExpiry");
-      setAuthenticated(false);
-    } else {
+  const checkSession = async () => {
+    try {
+      await api.get("/files"); // protected route
       setAuthenticated(true);
+    } catch {
+      setAuthenticated(false);
     }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("tokenExpiry");
-    setAuthenticated(false);
   };
 
-  return authenticated ? (
-    <Dashboard onLogout={handleLogout} />
-  ) : (
-    <Auth onAuth={() => setAuthenticated(true)} />
+  useEffect(() => {
+    checkSession();
+  }, []);
+
+  return (
+    <Routes>
+      <Route path="/auth" element={<Auth onAuth={checkSession} />} />
+      <Route
+        path="/*"
+        element={
+          authenticated ? (
+            <Dashboard />
+          ) : (
+            <Navigate to="/auth" />
+          )
+        }
+      />
+    </Routes>
   );
 }

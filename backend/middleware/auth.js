@@ -1,23 +1,13 @@
 import jwt from "jsonwebtoken";
 
 export const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({
-      message: "Login required",
-    });
-  }
-
-  const token = authHeader.split(" ")[1];
+  const token = req.cookies.token;
+  if (!token) return res.status(401).json({ message: "Session expired" });
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.userId = decoded.id;
+    jwt.verify(token, process.env.JWT_SECRET);
     next();
-  } catch (err) {
-    return res.status(401).json({
-      message: "Session expired or invalid token",
-    });
+  } catch {
+    res.status(401).json({ message: "Session expired" });
   }
 };

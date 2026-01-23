@@ -6,66 +6,35 @@ import User from "../models/User.js";
 const router = express.Router();
 
 router.post("/signup", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ message: "All fields required" });
-    }
-
-    const exists = await User.findOne({ email });
-    if (exists) {
-      return res.status(409).json({ message: "User already exists" });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await User.create({
-      email,
-      password: hashedPassword,
-    });
-
-    return res.status(201).json({
-      message: "Signup successful. Please login.",
-    });
-  } catch (err) {
-    return res.status(500).json({ message: "Signup failed" });
-  }
+  const hash = await bcrypt.hash(req.body.password, 10);
+  await User.create({ email: req.body.email, password: hash });
+  res.json({ message: "Signup successful" });
 });
 
-
 router.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const user = await User.findOne({ email: req.body.email });
+  const ok = await bcrypt.compare(req.body.password, user.password);
+  if (!ok) return res.status(401).json({ message: "Invalid" });
 
-    if (!email || !password) {
-      return res.status(400).json({ message: "All fields required" });
-    }
+  const token = jwt.sign(
+    { id: user._id },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
 
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+  // 🔥 send token as cookie
+  res.cookie("token", token, {
+    httpOnly: true,
+    maxAge: 3600000,
+    sameSite: "lax"
+  });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+  res.json({ message: "Login success" });
+});
 
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "1h" }
-    );
-
-    return res.json({
-      message: "Login successful",
-      token,
-      expiresIn: 3600, 
-    });
-  } catch (err) {
-    return res.status(500).json({ message: "Login failed" });
-  }
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.json({ message: "Logged out" });
 });
 
 export default router;

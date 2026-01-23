@@ -1,0 +1,32 @@
+.shared-container {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shared-card {
+  background: white;
+  padding: 40px 50px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.shared-card h2 {
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.download-btn {
+  padding: 12px 18px;
+  background: #4e73df;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: 0.3s ease;
+}
+
+.download-btn:hover {
+  background: #2e59d9;
+}
