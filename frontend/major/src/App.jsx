@@ -10,7 +10,7 @@ export default function App() {
 
   const checkSession = async () => {
     try {
-      await api.get("/files"); // protected route
+      await api.get("/files"); 
       setAuthenticated(true);
     } catch {
       setAuthenticated(false);
