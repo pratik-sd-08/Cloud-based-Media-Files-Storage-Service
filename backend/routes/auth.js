@@ -1,31 +1,66 @@
-router.post("/login", async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(401).json({ message: "Invalid" });
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
-  const ok = await bcrypt.compare(req.body.password, user.password);
-  if (!ok) return res.status(401).json({ message: "Invalid" });
+const router = express.Router();
 
-  const token = jwt.sign(
-    { id: user._id },
-    process.env.JWT_SECRET,
-    { expiresIn: "1h" }
-  );
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: true,       
-    sameSite: "none",    
-    maxAge: 3600000,
-  });
+router.post("/signup", async (req, res) => {
+  try {
+    const existing = await User.findOne({ email: req.body.email });
+    if (existing) {
+      return res.status(400).json({ message: "User already exists" });
+    }
 
-  res.json({ message: "Login success" });
+    const hash = await bcrypt.hash(req.body.password, 10);
+
+    await User.create({
+      email: req.body.email,
+      password: hash,
+    });
+
+    res.json({ message: "Signup successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Signup error" });
+  }
 });
+
+
+router.post("/login", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) return res.status(401).json({ message: "Invalid credentials" });
+
+    const ok = await bcrypt.compare(req.body.password, user.password);
+    if (!ok) return res.status(401).json({ message: "Invalid credentials" });
+
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+   
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 3600000,
+    });
+
+    res.json({ message: "Login success" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Login error" });
+  }
+});
+
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-  });
+  res.clearCookie("token");
   res.json({ message: "Logged out" });
 });
+
+export default router;
