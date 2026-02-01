@@ -12,20 +12,47 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
+
 
 app.use(express.json());
 app.use(cookieParser());
 
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.CLIENT_URL,
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
+
+
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"));
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
+
+
 
 app.use("/auth", authRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/files", fileRoutes);
 
-app.listen(3200, () => console.log("Server running on 3200"));
+
+
+const PORT = process.env.PORT || 3200;
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+});
