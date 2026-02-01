@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "./api/api";
+import { api } from "./api/api";
+
 
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";

@@ -13,7 +13,6 @@ dotenv.config();
 const app = express();
 
 
-
 app.use(express.json());
 app.use(cookieParser());
 
@@ -29,7 +28,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        callback(new Error("CORS not allowed"));
       }
     },
     credentials: true,
@@ -37,18 +36,15 @@ app.use(
 );
 
 
-
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
-
+  .catch((err) => console.error("Mongo error:", err));
 
 
 app.use("/auth", authRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/files", fileRoutes);
-
 
 
 const PORT = process.env.PORT || 3200;
