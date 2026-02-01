@@ -10,27 +10,31 @@ const bucket = () =>
     { bucketName: "uploads" }
   );
 
-
+/* ---------- GET USER FILES ---------- */
 router.get("/", authMiddleware, async (req, res) => {
-  const files = await mongoose.connection.db
-    .collection("uploads.files")
-    .find()
-    .toArray();
+  try {
+    const files = await mongoose.connection.db
+      .collection("uploads.files")
+      .find({ "metadata.userId": req.user.id }) // filter by logged-in user
+      .toArray();
 
-  res.json(files);
+    res.json(files);
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching files" });
+  }
 });
 
-
-router.get("/download/:id", (req, res) => {
+/* ---------- DOWNLOAD FILE ---------- */
+router.get("/download/:id", authMiddleware, (req, res) => {
   bucket()
     .openDownloadStream(new mongoose.Types.ObjectId(req.params.id))
     .pipe(res);
 });
 
-
+/* ---------- SHARE LINK ---------- */
 router.get("/share/:id", authMiddleware, (req, res) => {
   res.json({
-    link: `http://localhost:5173/shared/${req.params.id}`
+    link: `${process.env.CLIENT_URL}/shared/${req.params.id}`,
   });
 });
 

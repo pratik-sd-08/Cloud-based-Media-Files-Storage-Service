@@ -2,12 +2,19 @@ import jwt from "jsonwebtoken";
 
 export const authMiddleware = (req, res, next) => {
   const token = req.cookies.token;
-  if (!token) return res.status(401).json({ message: "Session expired" });
+
+  if (!token) {
+    return res.status(401).json({ message: "Session expired" });
+  }
 
   try {
-    jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    // VERY IMPORTANT: attach user id to request
+    req.user = decoded;
+
     next();
-  } catch {
-    res.status(401).json({ message: "Session expired" });
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
