@@ -4,7 +4,6 @@ import { authMiddleware } from "../middleware/auth.js";
 
 const router = express.Router();
 
-/* ---------- GET USER FILES ---------- */
 router.get("/", authMiddleware, async (req, res) => {
   try {
     const files = await mongoose.connection.db
@@ -19,7 +18,7 @@ router.get("/", authMiddleware, async (req, res) => {
   }
 });
 
-/* ---------- DOWNLOAD FILE ---------- */
+
 router.get("/download/:id", authMiddleware, async (req, res) => {
   try {
     const fileId = new mongoose.Types.ObjectId(req.params.id);
@@ -44,7 +43,7 @@ router.get("/download/:id", authMiddleware, async (req, res) => {
   }
 });
 
-/* ---------- SHARE FILE LINK ---------- */
+
 router.get("/share/:id", authMiddleware, async (req, res) => {
   try {
     const fileId = new mongoose.Types.ObjectId(req.params.id);

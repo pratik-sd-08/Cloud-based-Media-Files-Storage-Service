@@ -13,8 +13,8 @@ router.post("/", authMiddleware, upload.single("file"), (req, res) => {
 
   res.json({
     message: "File uploaded successfully",
-    fileId: req.file.id,          // important
-    filename: req.file.filename, // useful for UI
+    fileId: req.file.id,          
+    filename: req.file.filename, 
   });
 });
 

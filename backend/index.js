@@ -12,10 +12,10 @@ dotenv.config();
 
 const app = express();
 
-/* ---------- DATABASE CONNECTION ---------- */
+
 connectDB();
 
-/* ---------- MIDDLEWARE ---------- */
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -37,12 +37,12 @@ app.use(
   })
 );
 
-/* ---------- ROUTES ---------- */
+
 app.use("/auth", authRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/files", fileRoutes);
 
-/* ---------- SERVER ---------- */
+
 const PORT = process.env.PORT || 3200;
 
 app.listen(PORT, () => {

@@ -5,7 +5,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-/* ---------- SIGNUP ---------- */
+
 router.post("/signup", async (req, res) => {
   try {
     const existing = await User.findOne({ email: req.body.email });
@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-/* ---------- LOGIN ---------- */
+
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -39,14 +39,14 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }   // session expiry
+      { expiresIn: "1h" }   
     );
 
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: 3600000, // 1 hour
+      maxAge: 3600000, 
     });
 
     res.json({ message: "Login success" });
@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
-/* ---------- CHECK SESSION ---------- */
+
 router.get("/session", (req, res) => {
   const token = req.cookies.token;
 
@@ -72,7 +72,7 @@ router.get("/session", (req, res) => {
   }
 });
 
-/* ---------- LOGOUT ---------- */
+
 router.get("/logout", (req, res) => {
   res.clearCookie("token");
   res.json({ message: "Logged out successfully" });
