@@ -5,7 +5,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
-
+/* ---------- SIGNUP ---------- */
 router.post("/signup", async (req, res) => {
   try {
     const existing = await User.findOne({ email: req.body.email });
@@ -27,7 +27,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-
+/* ---------- LOGIN ---------- */
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -39,15 +39,14 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1h" }   // session expiry
     );
 
-   
     res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: 3600000,
+      maxAge: 3600000, // 1 hour
     });
 
     res.json({ message: "Login success" });
@@ -57,10 +56,26 @@ router.post("/login", async (req, res) => {
   }
 });
 
+/* ---------- CHECK SESSION ---------- */
+router.get("/session", (req, res) => {
+  const token = req.cookies.token;
 
+  if (!token) {
+    return res.status(401).json({ message: "Session expired" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.json({ userId: decoded.id });
+  } catch {
+    res.status(401).json({ message: "Session expired" });
+  }
+});
+
+/* ---------- LOGOUT ---------- */
 router.get("/logout", (req, res) => {
   res.clearCookie("token");
-  res.json({ message: "Logged out" });
+  res.json({ message: "Logged out successfully" });
 });
 
 export default router;

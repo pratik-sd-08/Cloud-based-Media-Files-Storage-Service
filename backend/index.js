@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
+import { connectDB } from "./db.js";
 import authRoutes from "./routes/auth.js";
 import uploadRoutes from "./routes/upload.js";
 import fileRoutes from "./routes/files.js";
@@ -12,10 +12,12 @@ dotenv.config();
 
 const app = express();
 
+/* ---------- DATABASE CONNECTION ---------- */
+connectDB();
 
+/* ---------- MIDDLEWARE ---------- */
 app.use(express.json());
 app.use(cookieParser());
-
 
 const allowedOrigins = [
   "http://localhost:5173",
@@ -35,18 +37,12 @@ app.use(
   })
 );
 
-
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("Mongo error:", err));
-
-
+/* ---------- ROUTES ---------- */
 app.use("/auth", authRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/files", fileRoutes);
 
-
+/* ---------- SERVER ---------- */
 const PORT = process.env.PORT || 3200;
 
 app.listen(PORT, () => {
