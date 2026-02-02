@@ -8,7 +8,7 @@ export const storage = new GridFsStorage({
     filename: Date.now().toString(),
     bucketName: "uploads",
     metadata: {
-      userId: req.user.id,   // VERY IMPORTANT
+      userId: req.user.id,   
     },
   }),
 });
