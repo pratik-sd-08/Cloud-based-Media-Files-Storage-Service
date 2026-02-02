@@ -7,12 +7,15 @@
   text-align: center;
   background: rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(8px);
+  z-index: 1000;
 }
 
 .nav-links {
   display: inline-flex;
   gap: 30px;
+  align-items: center;
 }
+
 
 .nav-links a {
   color: white;
@@ -22,6 +25,18 @@
   transition: 0.3s ease;
 }
 
-.nav-links a:hover {
+
+.nav-links button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links button:hover {
   color: #ffd700;
 }

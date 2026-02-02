@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Upload from "./Upload";
 import Files from "./Files";
@@ -12,7 +12,7 @@ export default function Dashboard() {
 
       <div className="dashboard-content">
         <Routes>
-          <Route path="/" element={<h2>Welcome</h2>} />
+          <Route index element={<h2>Welcome</h2>} />
           <Route path="upload" element={<Upload />} />
           <Route path="files" element={<Files />} />
           <Route path="shared/:id" element={<Shared />} />

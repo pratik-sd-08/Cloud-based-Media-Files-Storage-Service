@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import api from "../api/api";
+import { api } from "../api/api";
 import "./files.css";
 
 export default function Files() {
   const [files, setFiles] = useState([]);
 
   useEffect(() => {
-    api.get("/files").then(res => setFiles(res.data));
+    api.get("/files").then((res) => setFiles(res.data));
   }, []);
 
   const share = async (id) => {
@@ -25,7 +25,7 @@ export default function Files() {
 
             <div className="file-actions">
               <a
-                href={`http://localhost:3200/files/download/${f._id}`}
+                href={`${import.meta.env.VITE_API_URL}/files/download/${f._id}`}
                 target="_blank"
                 rel="noreferrer"
               >

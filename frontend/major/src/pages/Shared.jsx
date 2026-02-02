@@ -10,7 +10,7 @@ export default function Shared() {
         <h2>Shared File</h2>
 
         <a
-          href={`http://localhost:3200/files/download/${id}`}
+          href={`${import.meta.env.VITE_API_URL}/files/download/${id}`}
           target="_blank"
           rel="noreferrer"
           className="download-btn"
